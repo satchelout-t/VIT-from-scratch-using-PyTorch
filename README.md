@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project implements an image classification pipeline on the MNIST handwritten digit dataset using a Convolutional Neural Network (CNN) in PyTorch. Beyond the implementation, this README examines why CNNs, despite their success, carry fundamental limitations in visual understanding and why the field has shifted toward attention-based architectures like the Vision Transformer (ViT).
+This project implements image classification on the MNIST handwritten digit dataset using a **Vision Transformer (ViT)** built from scratch in PyTorch. The architecture includes patch embedding, multi-head self-attention, positional encodings, a CLS token, and an MLP classification head. Beyond the implementation, this README examines why CNNs carry fundamental limitations in visual understanding and why attention-based architectures like ViT represent a more principled approach to image recognition.
 
 ---
 
@@ -10,10 +10,14 @@ This project implements an image classification pipeline on the MNIST handwritte
 
 | Metric | Value |
 |---|---|
-| Final Training Accuracy | ~89–95% (per batch, Epoch 5) |
+| Final Training Accuracy | ~89-95% (per batch, Epoch 5) |
 | Validation Accuracy | **88.30%** |
 | Dataset | MNIST (70,000 grayscale images, 10 classes) |
-| Architecture | Custom CNN with Conv2D, MaxPooling, Dropout, FC layers |
+| Architecture | Vision Transformer (PatchEmbed + TransformerEncoder + MLP Head) |
+| Patch Size | 7x7 (16 patches per image) |
+| Embed Dim | 16 |
+| Attention Heads | 1 |
+| Transformer Blocks | 1 |
 | Framework | PyTorch |
 
 Sample predictions on 20 test images show strong performance on clean digits, with occasional misclassification on visually ambiguous cases (e.g., 8 vs 9, 1 vs 7).
@@ -74,10 +78,10 @@ This is precisely why the current direction in CV research is **hybrid architect
 ## Project Structure
 
 ```
-├── model.py          # CNN architecture definition
-├── train.py          # Training loop with batch logging
-├── evaluate.py       # Validation accuracy and prediction visualization
-├── requirements.txt  # Dependencies
+├── vit.py            # Full ViT implementation (PatchEmbedding, TransformerEncoder, MLP Head)
+├── assets/
+│   ├── results.png          # Prediction grid on 20 test images
+│   └── vit_architecture.png # ViT architecture diagram
 └── README.md
 ```
 
@@ -88,11 +92,8 @@ This is precisely why the current direction in CV research is **hybrid architect
 ```bash
 pip install torch torchvision matplotlib
 
-# Train the model
-python train.py
-
-# Evaluate and visualize predictions
-python evaluate.py
+# Run the full pipeline (trains and evaluates)
+python vit.py
 ```
 
 ---
@@ -109,9 +110,9 @@ python evaluate.py
 
 ## What's Next
 
-- Replacing the CNN backbone with a **ViT-based patch embedding encoder** and comparing validation accuracy on MNIST directly
-- Experimenting with hybrid architectures: CNN for low-level feature extraction combined with a Transformer encoder for global reasoning
-- Testing on more complex datasets like CIFAR-10 and CIFAR-100 to stress-test the architectural differences at scale
+- Increasing embed dim and number of transformer blocks to close the gap with CNN baselines on MNIST
+- Testing on more complex datasets like CIFAR-10 and CIFAR-100 to stress-test the ViT architecture at scale
+- Experimenting with hybrid architectures: CNN patch embedding instead of linear projection for richer local features before the Transformer encoder
 
 ---
 
