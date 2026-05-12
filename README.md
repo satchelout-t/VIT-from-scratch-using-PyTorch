@@ -18,6 +18,9 @@ This project implements an image classification pipeline on the MNIST handwritte
 
 Sample predictions on 20 test images show strong performance on clean digits, with occasional misclassification on visually ambiguous cases (e.g., 8 vs 9, 1 vs 7).
 
+![Prediction Results](assets/result.png)
+*Figure: Model predictions vs ground truth labels on 20 MNIST test images.*
+
 ---
 
 ## Why CNNs Work And Where They Break
@@ -48,7 +51,7 @@ The Transformer architecture, originally designed for natural language processin
 
 In 2020, Dosovitskiy et al. proposed the **Vision Transformer (ViT)**, which applies this idea directly to images. The key insight is simple: split an image into fixed-size patches, treat each patch as a "token" (analogous to a word in NLP), and run a standard Transformer encoder on the sequence of patch embeddings.
 
-![ViT Architecture](vit_architecture.png)
+![ViT Architecture](assets/arch.png)
 *Figure: Vision Transformer (ViT) architecture. The image is divided into fixed patches, each linearly embedded and combined with positional encodings, then passed through a standard Transformer encoder. A classification token [CLS] aggregates global information for the final prediction.*
 
 ### What ViT fixes
